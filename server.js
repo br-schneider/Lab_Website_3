@@ -194,7 +194,7 @@ app.post('/home/pick_color', function(req, res) {
 
 
 app.get('/team_stats', function(req, res) {
-	var query1 = 'select * from football_games';
+    var query1 = 'select * from football_games';
     var query2 = 'select count(*) from football_games where home_score > visitor_score';
     var query3 = 'select count(*) from football_games where visitor_score > home_score';
     db.task('get-everything', task => {
@@ -207,24 +207,25 @@ app.get('/team_stats', function(req, res) {
         .then(info => {
             res.render('pages/team_stats', {
                 my_title: "Team Stats",
-                total_games: info[0],
-                wins: info[1],
-                losses: info[2]
+                game: info[0],
+                win: info[1][0],
+                lose: info[2][0]
 
             })
         })
         .catch(error => {
-          // display error message in case an error
+        	// display error message in case an error
             console.log(error);
             res.render('pages/team_stats', {
                 title: 'Team Stats',
-                total_games: '',
-                wins: '',
-                losses: ''
+                game: '',
+                win: '',
+                lose: ''
             })
         });
 
 });
+
 
 
 app.listen(3000);
